@@ -2,6 +2,7 @@ const base = import.meta.env.BASE_URL;
 
 const links = [
     {id: 'home', label: 'Home', href: 'index.html'},
+    {id: 'contact', label: 'Contact Me', href: 'contact.html'},
 ];
 
 export class Navbar extends HTMLElement {
