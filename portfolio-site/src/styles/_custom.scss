@@ -1,5 +1,319 @@
+html {
+  scroll-behavior: smooth;
+}
+
+// navbar 
 .site-hero {
   padding-block: 6rem;
   background: linear-gradient(135deg, $primary, shade-color($primary, 40%));
   color: $white;
+}
+
+site-header {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: $zindex-sticky;
+}
+
+.site-nav {
+  padding-block: 1rem;
+  background: rgba($green-deep, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba($white, 0.08);
+  transition: padding 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+
+  &.is-scrolled {
+    padding-block: 0.5rem;
+    background: rgba($green-deep, 0.98);
+    box-shadow: 0 0.5rem 1.5rem rgba($black, 0.25);
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.65rem;
+    color: $white;
+    background: linear-gradient(135deg, tint-color($primary, 30%), $primary);
+    box-shadow: inset 0 0 0 1px rgba($white, 0.15);
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.5rem 0.9rem;
+    font-weight: 500;
+    color: rgba($white, 0.72);
+    transition: color 0.2s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0.9rem;
+      right: 0.9rem;
+      bottom: 0.15rem;
+      height: 2px;
+      border-radius: 2px;
+      background: tint-color($primary, 55%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &.active {
+      color: $white;
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  .btn-cta {
+    padding: 0.45rem 1.25rem;
+    font-weight: 600;
+    color: $green-deep;
+    background: tint-color($primary, 80%);
+    border: 0;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      background: $white;
+      transform: translateY(-1px);
+    }
+  }
+
+  // mobile: the opened menu becomes a tidy panel
+  @include media-breakpoint-down(lg) {
+    .navbar-collapse {
+      margin-top: 0.75rem;
+      padding: 0.75rem 0 1rem;
+      border-top: 1px solid rgba($white, 0.1);
+    }
+  }
+}
+
+//hero
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 85vh;
+  padding: 6rem 0 10rem;
+  overflow: hidden;
+  color: $white;
+  background: radial-gradient(60rem 30rem at 85% 0%, rgba(tint-color($primary, 30%), 0.35), transparent 60%),
+  radial-gradient(40rem 30rem at 0% 100%, rgba($primary, 0.5), transparent 60%),
+  linear-gradient(160deg, $green-deep, shade-color($green-deep, 35%));
+}
+
+.hero-eyebrow,
+.section-eyebrow {
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase; 
+}
+
+.hero-eyebrow {
+  color: tint-color($primary, 60%);
+}
+
+.section-eyebrow {
+  color: $primary;
+}
+
+.hero .lead {
+  max-width: 36rem;
+  color: rgba($white, 0.8);
+}
+
+.hero-wave {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: clamp(3rem, 8vw, 7.5rem);
+  fill: var(--bs-body-bg);
+}
+
+.hero-content > * {
+  animation: rise 0.8s ease both;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{0.1 * $i}s;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+}
+
+//about
+
+.about {
+  padding-block: 4rem 6rem;
+}
+
+.about-photo-wrap {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 1rem -1rem -1rem 1rem;
+    border: 2px solid tint-color($primary, 40%);
+    border-radius: 1.5rem;
+  }
+}
+
+.about-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  box-shadow: 0 1.5rem 3rem rgba($green-deep, 0.25);
+}
+
+.about-stat {
+  strong {
+    display: block;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: $primary;
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: var(--bs-secondary-color);
+  }
+}
+
+.skill-badge {
+  padding: 0.5rem 0.9rem;
+  font-weight: 500;
+  color: $green-deep;
+  background: tint-color($primary, 85%);
+}
+
+// scroll
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content > * {
+    animation: none;
+  }
+
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+// page hero compact
+.page-hero {
+  @extend .hero;
+  min-height: 0;
+  padding: 4rem 0 7rem;
+}
+
+// project cards
+
+.project-card {
+  overflow: hidden;
+  border: 0;
+  border-radius: 1.25rem;
+  background: var(--bs-body-bg);
+  box-shadow: 
+    0 0.25rem 1rem rgba($green-deep, 0.08),
+    0 0 0 1px rgba($green-deep, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-0.35rem);
+    box-shadow: 
+      0 1.25rem 2.5rem rgba($green-deep, 0.18),
+      0 0 0 1px rgba($primary, 0.3);
+  }
+
+  .project-thumb {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: linear-gradient(135deg, tint-color($primary, 25%), $green-deep);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+  }
+
+  &:hover .project-thumb img {
+    transform: scale(1.05);
+  }
+
+  .project-initial {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: rgba($white, 0.75);
+  }
+
+  .card-title {
+    font-weight: 700;
+  }
+
+  .project-links {
+    background: transparent;
+    border-top: 1px solid rgba($green-deep, 0.08);
+
+    a {
+      font-weight: 600;
+      text-decoration: none;
+      color: $primary;
+
+      &:hover {
+        color: shade-color($primary, 25%);
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card .project-thumb img {
+    transition: none;
+  }
 }
